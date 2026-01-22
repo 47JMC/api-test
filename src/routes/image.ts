@@ -28,7 +28,7 @@ const router = express.Router();
 const imagesMap = new Map<string, string>();
 
 router.get("/generate/:prompt", async (req, res) => {
-  const { API_KEY } = process.env;
+  const { API_KEY, API_URL } = process.env;
 
   if (!API_KEY) {
     return res
@@ -56,7 +56,7 @@ router.get("/generate/:prompt", async (req, res) => {
         <title>Generated Image</title>
         <meta property="og:image" content="${BASE_URL}" />
       </head>
-      <body style="background:#0f172a;color:white;text-align:center;">
+      <body style="background:#0000;color:white;text-align:center;">
         <h1>${clearPrompt}</h1>
         <img src="${BASE_URL}" alt="Generated image" style="max-width:90%;border-radius:12px;" />
       </body>
@@ -65,10 +65,7 @@ router.get("/generate/:prompt", async (req, res) => {
 
   imagesMap.set(imageId, htmlContent);
 
-  return res.status(200).json({
-    imageUrl: BASE_URL,
-    id: imageId,
-  });
+  return res.status(200).redirect(`${API_URL}/image/view/${imageId}`);
 });
 
 router.get("/view-image/:id.png", (req, res) => {
