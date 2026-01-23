@@ -2,6 +2,7 @@ import express from "express";
 import { nanoid } from "nanoid";
 import fs from "fs";
 import path from "path";
+import { error } from "console";
 
 const imagesDir = path.join(process.cwd(), "images");
 
@@ -10,9 +11,15 @@ if (!fs.existsSync(imagesDir)) {
 }
 
 async function saveImage(imageUrl: string, id: string) {
+  const { API_KEY } = process.env;
+
+  if (!API_KEY) {
+    throw new Error("Missing environment varibles");
+  }
+
   const res = await fetch(imageUrl, {
     headers: {
-      Authorisation: "",
+      Authorisation: `Bearer ${API_KEY}`,
     },
   });
   const buffer = Buffer.from(await res.arrayBuffer());
@@ -28,9 +35,9 @@ const router = express.Router();
 const imagesMap = new Map<string, string>();
 
 router.get("/generate/:prompt", async (req, res) => {
-  const { API_KEY, API_URL } = process.env;
+  const { API_URL } = process.env;
 
-  if (!API_KEY) {
+  if (!API_URL) {
     return res
       .status(500)
       .json({ error: "Requied environment variables not found!" });
@@ -45,7 +52,7 @@ router.get("/generate/:prompt", async (req, res) => {
   }
 
   const clearPrompt = prompt.replace(" ", "-");
-  const BASE_URL = `https://gen.pollinations.ai/image/${clearPrompt}?seed=${Math.floor(Math.random() * 10000).toString()}&key=${API_KEY}&model=flux&width=512&512`;
+  const BASE_URL = `https://gen.pollinations.ai/image/${clearPrompt}?seed=${Math.floor(Math.random() * 10000).toString()}&model=flux&width=512&512`;
   const imageId = nanoid();
   await saveImage(BASE_URL, imageId);
 
