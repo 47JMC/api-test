@@ -2,7 +2,6 @@ import express from "express";
 import { nanoid } from "nanoid";
 import fs from "fs";
 import path from "path";
-import { error } from "console";
 
 const imagesDir = path.join(process.cwd(), "images");
 
