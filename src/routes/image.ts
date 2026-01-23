@@ -18,7 +18,7 @@ async function saveImage(imageUrl: string, id: string) {
 
   const res = await fetch(imageUrl, {
     headers: {
-      Authorisation: `Bearer ${API_KEY}`,
+      Authorization: `Bearer ${API_KEY}`,
     },
   });
   const buffer = Buffer.from(await res.arrayBuffer());
