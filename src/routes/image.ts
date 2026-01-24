@@ -82,6 +82,7 @@ router.get("/view-image/:id.png", (req, res) => {
     return res.status(404).send("Not found");
   }
 
+  res.header("Content-Type", "image/png");
   res.sendFile(filePath);
 });
 
