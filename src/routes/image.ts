@@ -51,7 +51,8 @@ router.get("/generate/:prompt", async (req, res) => {
   }
 
   const clearPrompt = prompt.replace(" ", "-");
-  const BASE_URL = `https://gen.pollinations.ai/image/${clearPrompt}?seed=${Math.floor(Math.random() * 10000).toString()}&model=flux&width=512&512`;
+  const rng = Math.floor(Math.random() * 10000);
+  const BASE_URL = `https://gen.pollinations.ai/image/${clearPrompt}?seed=${rng.toString()}&model=flux&width=512&512`;
   const imageId = nanoid();
   await saveImage(BASE_URL, imageId);
 
@@ -87,7 +88,8 @@ router.get("/view-image/:id.png", (req, res) => {
 router.get("/view/:id", (req, res) => {
   const { API_URL } = process.env;
 
-  const imageUrl = `${API_URL}/image/view-image/${req.params.id}.png??seed=${Math.floor(Math.random() * 10000).toString()}`;
+  const rng = Math.floor(Math.random() * 10000);
+  const imageUrl = `${API_URL}/image/view-image/${req.params.id}.png?seed=${rng.toString()}`;
 
   res.send(`
     <!DOCTYPE html>
@@ -98,7 +100,7 @@ router.get("/view/:id", (req, res) => {
         <!-- Open Graph -->
         <meta property="og:type" content="website" />
         <meta property="og:title" content="AI Generated Image" />
-        <meta property="og:description" content="Generated just for you" />
+        <meta property="og:description" content="Generated just for you with Pollinations.ai" />
         <meta property="og:image" content="${imageUrl}" />
 
         <!-- Twitter -->

@@ -9,7 +9,8 @@ app.use(express.json());
 app.use("/image", router);
 
 const PORT = process.env.PORT || 4000;
+const API_URL = process.env.API_URL || "http://localhost";
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://${API_URL}:${PORT}`);
 });
