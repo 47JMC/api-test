@@ -62,6 +62,9 @@ router.get("/generate/:prompt", async (req, res) => {
       <head>
         <title>Generated Image</title>
         <meta property="og:image" content="${BASE_URL}" />
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="512">
+        <meta property="og:image:height" content="512">
       </head>
       <body style="background:#0000;color:white;text-align:center;">
         <h1>${clearPrompt}</h1>
@@ -102,7 +105,9 @@ router.get("/view/:id", (req, res) => {
         <meta property="og:title" content="AI Generated Image" />
         <meta property="og:description" content="Generated just for you with Pollinations.ai" />
         <meta property="og:image" content="${imageUrl}" />
-
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="512">
+        <meta property="og:image:height" content="512">
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="${imageUrl}" />
