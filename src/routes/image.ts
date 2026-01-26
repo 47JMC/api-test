@@ -52,7 +52,7 @@ router.get("/generate/:prompt", async (req, res) => {
 
   const clearPrompt = prompt.replace(" ", "-");
   const rng = Math.floor(Math.random() * 10000);
-  const BASE_URL = `https://gen.pollinations.ai/image/${clearPrompt}?seed=${rng.toString()}&model=flux&width=512&512`;
+  const BASE_URL = `https://gen.pollinations.ai/image/${clearPrompt}?seed=${rng.toString()}&model=flux&width=512&height=512`;
   const imageId = nanoid();
   await saveImage(BASE_URL, imageId);
 
